@@ -14,6 +14,9 @@ async function start() {
         app.get("/", (req, res) => {
             res.status(200).send("<h1>Você está na página inicial!</h1>");
         })
+        app.all("*all", (req, res) => {
+            res.status(404).send("<h1>404 - Página não encontrada</h1>");
+        })
         app.listen(process.env.PORT, () => {
             console.log(`Servidor iniciado no PORT ${process.env.PORT} em http://localhost:3000/`);
         });
