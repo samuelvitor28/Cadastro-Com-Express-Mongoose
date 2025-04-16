@@ -1,6 +1,6 @@
 const Dotenv = require("dotenv").config();
 const Express = require("express");
-const MainRouter = require("./mainRouter");
+const MainRouter = require("./apiRouter");
 const MongoConect = require("./mongoConnect");
 
 async function start() {
