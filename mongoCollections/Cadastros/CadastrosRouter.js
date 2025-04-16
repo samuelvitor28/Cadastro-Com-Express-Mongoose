@@ -24,6 +24,14 @@ router.get("/", async (req, res) => {
     res.status(200).json({ "success": true, "result": result })
 })
 
+router.get("/:nome", async (req, res) => {
+    let result = await Cadastro.find({nome: req.params.nome}, {email: 0, senha: 0, __v: 0});
+    if (result.length == 0)
+        return res.status(400).json({"success": false, "message": "Cadastro não encontrado."});
+
+    res.status(200).json({"success": true, "result": result});
+})
+
 router.post("/", async (req, res) => {
     try {
         let result = await Cadastro.insertOne(req.body);
@@ -61,7 +69,7 @@ router.put("/:nome", async (req, res) => {
         else if (result.matchedCount == 0)
             return res.status(400).json({"success": false, "message": "Cadastro não encontrado."})
 
-        res.status(200).json({"success": true, "result": "Usuário atualizado com sucesso."})
+        res.status(200).json({"success": true, "result": "Cadastro atualizado com sucesso."})
     } catch (err) {
         res.status(400).json({"success": false, "message": uniqueErrorHandler(err) || validationErrorHandler(err) || err})
     }
