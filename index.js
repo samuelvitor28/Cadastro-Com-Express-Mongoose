@@ -5,6 +5,7 @@ const Path = require("path");
 const Cadastro = require("./mongoCollections/Cadastros/Cadastro");
 const MainRouter = require("./apiRouter");
 const MongoConect = require("./mongoConnect");
+const port = process.env.PORT || 3000
 
 async function start() {
     try {
@@ -32,7 +33,7 @@ async function start() {
             res.status(404).send("<h1>404 - Página não encontrada</h1>");
         })
         app.listen(process.env.PORT, () => {
-            console.log(`Servidor iniciado no PORT ${process.env.PORT || 3000} em http://localhost:3000/`);
+            console.log(`Servidor iniciado no PORT ${port} em http://localhost:3000/`);
         });
     } catch (err) {
         console.log(`Não foi possível se conectar ao MongoDB\nErro: ${err}`);
