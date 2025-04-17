@@ -1,6 +1,7 @@
 const Dotenv = require("dotenv").config();
 const Express = require("express");
 const ExpressSession = require("express-session");
+const Path = require("path");
 const Cadastro = require("./mongoCollections/Cadastros/Cadastro");
 const MainRouter = require("./apiRouter");
 const MongoConect = require("./mongoConnect");
@@ -21,9 +22,10 @@ async function start() {
         app.use("/api", MainRouter)
 
         app.get("/", async (req, res) => {
-            let login = await Cadastro.findById(req.session.objectID, {senha: 0})
+            /*let login = await Cadastro.findById(req.session.objectID, {senha: 0})
             let loginMessage = (login) ? `Você está autenticado como ${login.nome}!` : "Você não está autenticado."
-            res.status(200).send(`<h1>Você está na página inicial!</h1>\n<h2>${loginMessage}</h2>`);
+            res.status(200).send(`<h1>Você está na página inicial!</h1>\n<h2>${loginMessage}</h2>`);*/
+            res.status(200).sendFile(Path.join(__dirname, "/public/index.html"))
         })
 
         app.all("*all", (req, res) => {

@@ -87,7 +87,6 @@ router.put("/", (req, res) => {
 router.put("/:nome", authLock, async (req, res) => {
     try {
         let login = await Cadastro.findById(req.session.objectID);
-        console.log(login)
         if (!login || login.nome.toLowerCase() != req.params.nome.toLowerCase()) // Permite apenas o propietário da conta alterar ela
             return res.status(400).json({"success": false, "message": "Sem autorização."});
 

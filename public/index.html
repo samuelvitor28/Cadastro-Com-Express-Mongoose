@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste de Autenticação</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    section { margin-bottom: 20px; }
+    input { display: block; margin: 5px 0; padding: 5px; width: 200px; }
+    button { padding: 5px 10px; margin-top: 5px; }
+    #status { font-weight: bold; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Teste de Autenticação</h1>
+  <div id="status">Verificando...</div>
+  <button id="logoutBtn" style="display:none;">Logout</button>
+
+  <section id="signup">
+    <h2>Cadastro</h2>
+    <input id="signupNome" placeholder="Nome">
+    <input id="signupEmail" placeholder="Email">
+    <input type="password" id="signupSenha" placeholder="Senha">
+    <button id="signupBtn">Cadastrar</button>
+    <div id="signupMsg"></div>
+  </section>
+
+  <section id="login">
+    <h2>Login</h2>
+    <input id="loginNome" placeholder="Nome">
+    <input type="password" id="loginSenha" placeholder="Senha">
+    <button id="loginBtn">Entrar</button>
+    <div id="loginMsg"></div>
+  </section>
+
+  <section id="profile" style="display:none;">
+    <h2>Perfil</h2>
+    <input id="profileNome" placeholder="Nome">
+    <input id="profileEmail" placeholder="Email">
+    <input type="password" id="profileSenha" placeholder="Nova Senha (opcional)">
+    <input id="profileDescricao" placeholder="Descrição">
+    <button id="updateBtn">Atualizar Perfil</button>
+    <div id="updateMsg"></div>
+  </section>
+
+  <section id="cadastros" style="display:none;">
+    <h2>Lista de Cadastros</h2>
+    <button id="listBtn">Carregar Lista</button>
+    <ul id="cadastroList"></ul>
+  </section>
+
+  <script>
+    let currentNome = null;
+
+    async function checkStatus() {
+      try {
+        const res = await fetch('/api/auth', { credentials: 'include' });
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        document.getElementById('status').textContent = `Autenticado como: ${data.nome}`;
+        currentNome = data.nome;
+        document.getElementById('profileNome').value = data.nome;
+        document.getElementById('profileEmail').value = data.email;
+        document.getElementById('profileDescricao').value = data.descricao || '';
+        showAuthenticated();
+      } catch {
+        document.getElementById('status').textContent = 'Não autenticado';
+        showUnauthenticated();
+      }
+    }
+
+    function showAuthenticated() {
+      document.getElementById('signup').style.display = 'none';
+      document.getElementById('login').style.display = 'none';
+      document.getElementById('profile').style.display = 'block';
+      document.getElementById('cadastros').style.display = 'block';
+      document.getElementById('logoutBtn').style.display = 'inline-block';
+    }
+
+    function showUnauthenticated() {
+      document.getElementById('signup').style.display = 'block';
+      document.getElementById('login').style.display = 'block';
+      document.getElementById('profile').style.display = 'none';
+      document.getElementById('cadastros').style.display = 'none';
+      document.getElementById('logoutBtn').style.display = 'none';
+    }
+
+    document.getElementById('signupBtn').addEventListener('click', async () => {
+      const nome = document.getElementById('signupNome').value;
+      const email = document.getElementById('signupEmail').value;
+      const senha = document.getElementById('signupSenha').value;
+      const res = await fetch('/api/cadastros/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ nome, email, senha })
+      });
+      const data = await res.json();
+      document.getElementById('signupMsg').textContent = data.mensagem || data.message;
+      if (res.ok) checkStatus();
+    });
+
+    document.getElementById('loginBtn').addEventListener('click', async () => {
+      const nome = document.getElementById('loginNome').value;
+      const senha = document.getElementById('loginSenha').value;
+      const res = await fetch('/api/cadastros/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ nome, senha })
+      });
+      const data = await res.json();
+      document.getElementById('loginMsg').textContent = data.mensagem || data.message;
+      if (res.ok) checkStatus();
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+      checkStatus();
+    });
+
+    document.getElementById('updateBtn').addEventListener('click', async () => {
+      const nome = document.getElementById('profileNome').value;
+      const email = document.getElementById('profileEmail').value;
+      const senha = document.getElementById('profileSenha').value;
+      const descricao = document.getElementById('profileDescricao').value;
+      const body = { nome, email, descricao };
+      if (senha) body.senha = senha;
+      const res = await fetch(`/api/cadastros/${encodeURIComponent(currentNome)}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+      document.getElementById('updateMsg').textContent = data.result || data.message;
+      if (res.ok) window.location.reload();
+    });
+
+    document.getElementById('listBtn').addEventListener('click', async () => {
+      const res = await fetch('/api/cadastros', { credentials: 'include' });
+      const data = await res.json();
+      const ul = document.getElementById('cadastroList');
+      ul.innerHTML = '';
+      if (data.success && Array.isArray(data.result)) {
+        data.result.forEach(u => {
+          const li = document.createElement('li');
+          li.textContent = `${u.nome} - Descrição: ${u.descricao || '(Sem descrição)'}`;
+          ul.appendChild(li);
+        });
+      }
+    });
+
+    // Inicializa
+    checkStatus();
+  </script>
+</body>
+</html>
