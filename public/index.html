@@ -193,7 +193,9 @@
             const userAtual = await pegarUsuarioAtual();
             const data = await deletarCadastro(userAtual.nome, userAtual.senha);
             document.getElementById('deleteMsg').textContent = data.result || data.message;
-            if (data.success) window.location.reload();
+            setTimeout(() => {
+                if (data.success) window.location.reload();
+            }, 5000);
         });
 
         document.getElementById('listBtn').addEventListener('click', async () => { // Lista de cadastros
