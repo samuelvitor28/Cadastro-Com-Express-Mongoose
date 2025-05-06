@@ -108,7 +108,11 @@
             document.getElementById('logoutBtn').style.display = 'none';
         }
 
-        async function cadastrar(nome, email, senha) { // Função para cadastro
+        // As funções retornam uma Promise então para receber o resultado delas é usado o "await", ex: await login(nome, senha); 
+        
+        // Função para cadastro
+        // Colocarn nome, email e senha para o cadastro ser criado, caso não seja efetuado retornará uma mensagem com o erro
+        async function cadastrar(nome, email, senha) { 
             const res = await fetch('/api/cadastros/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -119,7 +123,9 @@
             return data;
         }
 
-        async function login(nome, senha) { // Função para login
+        // Função para login
+        // Colocar o nome e a senha do cadastro, se estiverem corretos o login será feito, caso contrário retornará uma mensagem com o erro
+        async function login(nome, senha) { 
             const res = await fetch('/api/cadastros/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -130,7 +136,9 @@
             return data;
         }
 
-        async function atualizarPerfil(body) { // Função para atualizar perfil
+         // Função para atualizar perfil 
+         // Os campos do body são os campos que serão atualizados, ex: {nome: "Isaque"} atualiza o nome para isaque
+        async function atualizarPerfil(body) {
             const res = await fetch(`/api/cadastros/${encodeURIComponent(currentNome)}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -140,9 +148,22 @@
             const data = await res.json();
             return data;
         }
-
-        async function pegarCadastros() { // Função para pegar lista de cadastros
+        // Função para pegar lista de cadastros
+        // Retorna um objeto com cada Cadastro
+        async function pegarCadastros() { 
             const res = await fetch('/api/cadastros', { credentials: 'include' });
+            const data = await res.json();
+            return data;
+        }
+
+        // Função para deletar um cadastro 
+        // Colocar nome e senha do cadastro a ser deletado
+        async function deletarCadastro(nome, senha) { 
+            const res = await fetch("/api/cadastros", {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ nome, senha }),
+            });
             const data = await res.json();
             return data;
         }
