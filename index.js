@@ -19,7 +19,7 @@ async function start() {
             saveUninitialized: false, // Não salva sessões que não foram inicializadas/vazias
             cookie: { maxAge: 60 * 60 * 1000 } // Sessão expira após 1 hora
         }))
-
+        app.use(Express.static("public"))
         app.use("/api", MainRouter)
 
         app.get("/", async (req, res) => {
