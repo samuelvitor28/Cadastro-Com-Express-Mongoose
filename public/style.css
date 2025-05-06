@@ -5,7 +5,7 @@ body{
   height: 100vh;
   justify-content: center; 
   align-items: center;
-  color: rgb(136, 12, 194);
+  color: rgb(90, 61, 109);
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
@@ -28,10 +28,10 @@ button{
   border-radius: 30px;
   margin-top: 10px;
   align-items: center;
+  justify-self: center;
 }
 button:hover{
   background-color: #832da5;
-  justify-self: center;
 }
 input{
   padding: 5px;
