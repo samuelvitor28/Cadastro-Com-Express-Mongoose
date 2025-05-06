@@ -12,14 +12,14 @@
     <form id="formulario">
         <h1>Teste de Autenticação</h1>
         <div id="status">Verificando...</div>
-        <button id="logoutBtn" style="display:none;">Logout</button>
+        <button id="logoutBtn" style="display:none;" type="button">Logout</button>
 
         <section id="signup">
         <h2>Cadastro</h2>
          <p> Nome: <input id="signupNome" placeholder="Nome"> </p>
          <p> E-mail: <input id="signupEmail" placeholder="E-mail"></p>
          <p> Senha: <input type="password" id="signupSenha" placeholder="Senha"></p>
-         <button id="signupBtn">Cadastrar</button>
+         <button id="signupBtn" type="button">Cadastrar</button>
          <div id="signupMsg"></div>
          </section>
 
@@ -27,7 +27,7 @@
          <h2>Login</h2>
          <p> Nome: <input id="loginNome" placeholder="Nome"></p>
          <p> Senha: <input type="password" id="loginSenha" placeholder="Senha"></p>
-         <button id="loginBtn">Entrar</button>
+         <button id="loginBtn" type="button">Entrar</button>
          <div id="loginMsg"></div>
         </section>
 
@@ -37,13 +37,13 @@
          <input id="profileEmail" placeholder="Email">
          <input type="password" id="profileSenha" placeholder="Nova Senha (opcional)">
          <input id="profileDescricao" placeholder="Descrição">
-         <button id="updateBtn">Atualizar Perfil</button>
+         <button id="updateBtn" type="button">Atualizar Perfil</button>
          <div id="updateMsg"></div>
         </section>
 
         <section id="cadastros" style="display:none;">
         <h2>Lista de Cadastros</h2>
-        <button id="listBtn">Carregar Lista</button>
+        <button id="listBtn" type="button">Carregar Lista</button>
         <ul id="cadastroList"></ul>
         </section>
     </form>
