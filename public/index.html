@@ -39,6 +39,8 @@
          <input id="profileDescricao" placeholder="Descrição">
          <button id="updateBtn" type="button">Atualizar Perfil</button>
          <div id="updateMsg"></div>
+         <button id="deleteBtn" type="button">Apagar Perfil</button>
+         <div id="deleteMsg"></div>
         </section>
 
         <section id="cadastros" style="display:none;">
@@ -178,6 +180,14 @@
 
             const data = await atualizarPerfil(body);
             document.getElementById('updateMsg').textContent = data.result || data.message;
+            if (data.success) window.location.reload();
+        });
+
+        document.getElementById('deleteBtn').addEventListener('click', async () => { // Deletar perfil
+            const nome = document.getElementById('profileNome').value;
+            const senha = document.getElementById('profileSenha').value;
+            const data = await deletarCadastro(nome, senha);
+            document.getElementById('deleteMsg').textContent = data.result || data.message;
             if (data.success) window.location.reload();
         });
 
