@@ -52,7 +52,7 @@ router.post("/", async (req, res) => { // Quando alguem registrar
 router.post("/login", async (req, res) => { // Quando alguem fazer login
     try {
         if (!req.body || (!req.body.nome && !req.body.email) || !req.body.senha)
-            return res.status(400).json({"success": false, "message": "Os campos 'nome' OU 'email' e 'senha' são obrigatórios."});
+            return res.status(400).json({"success": false, "message": "Os campos 'nome' e 'senha' são obrigatórios."});
 
         let result = await Cadastro.find(req.body);
         if (result.length == 0)
