@@ -55,9 +55,7 @@
 
         async function checkStatus() {
             try {
-                const res = await fetch('/api/auth', { credentials: 'include' });
-                if (!res.ok) throw new Error();
-                const data = await res.json();
+                const data = await pegarUsuarioAtual();
                 document.getElementById('status').textContent = `Autenticado como: ${data.nome}`;
                 currentNome = data.nome;
                 document.getElementById('profileNome').value = data.nome;
@@ -134,6 +132,14 @@
             return data;
         }
 
+        // Função para pegar as informações do login atual
+        // Retorna um objeto com as informações
+        async function pegarUsuarioAtual() {
+            const res = await fetch('/api/auth', { credentials: 'include' });
+                if (!res.ok) throw new Error();
+                const data = await res.json();
+                return data;
+        }
         // Função para deletar um cadastro 
         // Colocar nome e senha do cadastro a ser deletado
         async function deletarCadastro(nome, senha) { 
@@ -184,9 +190,8 @@
         });
 
         document.getElementById('deleteBtn').addEventListener('click', async () => { // Deletar perfil
-            const nome = document.getElementById('loginName').value;
-            const senha = document.getElementById('loginSenha').value;
-            const data = await deletarCadastro(nome, senha);
+            const userAtual = await pegarUsuarioAtual();
+            const data = await deletarCadastro(userAtual.nome, userAtual.senha);
             document.getElementById('deleteMsg').textContent = data.result || data.message;
             if (data.success) window.location.reload();
         });
