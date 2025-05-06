@@ -184,8 +184,8 @@
         });
 
         document.getElementById('deleteBtn').addEventListener('click', async () => { // Deletar perfil
-            const nome = document.getElementById('profileNome').value;
-            const senha = document.getElementById('profileSenha').value;
+            const nome = document.getElementById('loginName').value;
+            const senha = document.getElementById('loginSenha').value;
             const data = await deletarCadastro(nome, senha);
             document.getElementById('deleteMsg').textContent = data.result || data.message;
             if (data.success) window.location.reload();
