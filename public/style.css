@@ -27,7 +27,6 @@ button{
   font-size: 16px;
   border-radius: 30px;
   margin-top: 10px;
-  align-items: center;
   justify-self: center;
 }
 button:hover{
