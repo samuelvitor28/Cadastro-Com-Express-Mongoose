@@ -36,12 +36,34 @@ button:hover{
 button#logoutBtn, button#deleteBtn  {
   background-color: #f75254;
 }
+
+button#logoutBtn:hover, button#deleteBtn:hover {
+background-color: #eb2e31;
+}
+
 button#updateBtn {
   background-color: #ff7f00;
 }
-button#listBtn, button#signupBtn, button#loginBtn {
+
+button#updateBtn:hover {
+background-color: #e38600;
+}
+
+button#listBtn {
   background-color: #2bc2e2;
 }
+
+button#listBtn:hover {
+  background-color: #1e94ad;
+}
+
+button#signupBtn, button#loginBtn {
+background-color: #a956f9
+}
+button#signupBtn:hover, button#loginBtn:hover {
+  background-color: #881eed
+}
+
 input{
   padding: 5px;
   border-radius: 10px;
