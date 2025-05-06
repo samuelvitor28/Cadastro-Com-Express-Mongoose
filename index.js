@@ -32,7 +32,7 @@ async function start() {
         app.all("*all", (req, res) => {
             res.status(404).send("<h1>404 - Página não encontrada</h1>");
         })
-        app.listen(process.env.PORT, () => {
+        app.listen(port, () => {
             console.log(`Servidor iniciado no PORT ${port} em http://localhost:3000/`);
         });
     } catch (err) {
