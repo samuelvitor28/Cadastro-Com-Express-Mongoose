@@ -13,10 +13,10 @@ body{
   align-items: center;
   justify-items: center;
   padding: 20px;
-  background-color: #b4b4b4;
+  background-color: #fffdfd;
   display: grid;
   grid-template-columns: 1fr;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 9px 13px 41px 16px rgba(0,0,0,0.1);
 }
 button{
   background-color: #9b9b9b;
@@ -31,6 +31,16 @@ button{
 }
 button:hover{
   background-color: #832da5;
+}
+
+button#logoutBtn, button#deleteBtn  {
+  background-color: #f75254;
+}
+button#updateBtn {
+  background-color: #ff7f00;
+}
+button#listBtn, button#signupBtn, button#loginBtn {
+  background-color: #2bc2e2;
 }
 input{
   padding: 5px;
