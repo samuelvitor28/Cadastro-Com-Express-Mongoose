@@ -1,17 +1,20 @@
-
 let currentNome = null;
 
 async function checkStatus() {
     try {
         const data = await pegarUsuarioAtual();
-        document.getElementById('status').textContent = `Autenticado como: ${data.nome}`;
+        const statusElement = document.getElementById('status')
+        statusElement.textContent = `Autenticado como: ${data.nome}`;
+        statusElement.style.color = 'green';
         currentNome = data.nome;
         document.getElementById('profileNome').value = data.nome;
         document.getElementById('profileEmail').value = data.email;
         document.getElementById('profileDescricao').value = data.descricao || '';
         showAuthenticated();
     } catch {
-        document.getElementById('status').textContent = 'Não autenticado';
+        const statusElement = document.getElementById('status');
+        statusElement.textContent = 'Não autenticado';
+        statusElement.style.color = 'red';
         showUnauthenticated();
     }
 }
@@ -99,6 +102,17 @@ async function deletarCadastro(nome, senha) {
     const data = await res.json();
     return data;
 }
+// Funcões popup padrões
+function showPopup(popupId, mensagemPopup) {
+    document.getElementById(popupId).querySelector('p').textContent = mensagemPopup;
+    document.getElementById(popupId).classList.add('show');
+    document.getElementById('popupOverlay').classList.add('show');
+}
+
+function closePopup(popupId) {
+    document.getElementById(popupId).classList.remove('show');
+    document.getElementById('popupOverlay').classList.remove('show');
+}
 
 document.getElementById('signupBtn').addEventListener('click', async () => { // Cadastrar
     const nome = document.getElementById('signupNome').value;
@@ -106,7 +120,7 @@ document.getElementById('signupBtn').addEventListener('click', async () => { // 
     const senha = document.getElementById('signupSenha').value;
 
     const data = await cadastrar(nome, email, senha);
-    document.getElementById('signupMsg').textContent = data.result || data.message;
+    showPopup('Popup', data.result || data.message);
     if (data.success) checkStatus(); // Se deu certo, atualiza a página
 });
 
@@ -115,7 +129,7 @@ document.getElementById('loginBtn').addEventListener('click', async () => { // F
     const senha = document.getElementById('loginSenha').value;
 
     const data = await login(nome, senha);
-    document.getElementById('loginMsg').textContent = data.result || data.message;
+    showPopup('Popup', data.result || data.message);
     if (data.success) checkStatus();
 });
 
@@ -133,17 +147,19 @@ document.getElementById('updateBtn').addEventListener('click', async () => { // 
     if (senha) body.senha = senha;
 
     const data = await atualizarPerfil(body);
-    document.getElementById('updateMsg').textContent = data.result || data.message;
-    if (data.success) window.location.reload();
+    showPopup('PopupTempo', data.result || data.message);
+    if (data.success){
+        setTimeout(() => {window.location.reload();}, 3000);
+    } 
 });
 
 document.getElementById('deleteBtn').addEventListener('click', async () => { // Deletar perfil
     const userAtual = await pegarUsuarioAtual();
     const data = await deletarCadastro(userAtual.nome, userAtual.senha);
-    document.getElementById('deleteMsg').textContent = data.result || data.message;
-    setTimeout(() => {
-        if (data.success) window.location.reload();
-    }, 5000);
+    showPopup('PopupTempo', data.result || data.message);
+    if (data.success){
+        setTimeout(() => {window.location.reload();}, 3000);
+    } 
 });
 
 document.getElementById('listBtn').addEventListener('click', async () => { // Lista de cadastros
