@@ -9,7 +9,15 @@
 </head>
 
 <body>
+    <div id="popupOverlay" class="popup-overlay"></div>
     <form id="formulario">
+        <div id="Popup" class="popup">
+            <p> </p>
+          <button onclick="closePopup('loginPopup')">Fechar</button>
+         </div>
+         <div id="PopupTempo" class="popup popuptempo">
+            <p> </p>
+         </div>
         <h1>Sistema de Autenticação</h1>
         <div id="status">Verificando...</div>
         <button id="logoutBtn" style="display:none;" type="button">Logout</button>
