@@ -148,17 +148,16 @@ document.getElementById('updateBtn').addEventListener('click', async () => { // 
 
     const data = await atualizarPerfil(body);
     showPopup('Popup', data.result || data.message);
-    if (data.success){
         setTimeout(() => {window.location.reload();}, 3000);
-    } 
 });
 
 document.getElementById('deleteBtn').addEventListener('click', async () => { // Deletar perfil
     const userAtual = await pegarUsuarioAtual();
     const data = await deletarCadastro(userAtual.nome, userAtual.senha);
     showPopup('PopupTempo', data.result || data.message);
-    setTimeout(() => {window.location.reload();}, 3000);
-    
+    if (data.success){
+        setTimeout(() => {window.location.reload();}, 3000);
+    }
 });
 
 document.getElementById('listBtn').addEventListener('click', async () => { // Lista de cadastros
