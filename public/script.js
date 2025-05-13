@@ -147,7 +147,7 @@ document.getElementById('updateBtn').addEventListener('click', async () => { // 
     if (senha) body.senha = senha;
 
     const data = await atualizarPerfil(body);
-    showPopup('PopupTempo', data.result || data.message);
+    showPopup('Popup', data.result || data.message);
     if (data.success){
         setTimeout(() => {window.location.reload();}, 3000);
     } 
