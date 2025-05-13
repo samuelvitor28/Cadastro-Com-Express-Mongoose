@@ -157,9 +157,8 @@ document.getElementById('deleteBtn').addEventListener('click', async () => { // 
     const userAtual = await pegarUsuarioAtual();
     const data = await deletarCadastro(userAtual.nome, userAtual.senha);
     showPopup('PopupTempo', data.result || data.message);
-    if (data.success){
-        setTimeout(() => {window.location.reload();}, 3000);
-    } 
+    setTimeout(() => {window.location.reload();}, 3000);
+    
 });
 
 document.getElementById('listBtn').addEventListener('click', async () => { // Lista de cadastros
